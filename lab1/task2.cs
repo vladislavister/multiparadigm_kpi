@@ -6,27 +6,25 @@ namespace vladislavister
     {
         public static void Main(string[] args)
         {
-            string text = File.ReadAllText(@"text.txt");
-            int lengthOfText = text.Length;
-            int i = 0;
-
-            string currentWord = "";
+            string currWord = "";
             string[] wordsArr = new string[100000];
-            string[,] pagesWordsArr = new string[10000, 10000];
-
+            string[,] pagesArr = new string[10000, 10000];
             int amountOfWords = 0;
             int amountOfRows = 0;
             int amountOfPages = 0;
             int amountOfWordsOnPage = 0;
+            string text = File.ReadAllText(@"text.txt");
+            int lengthOfText = text.Length;
+            int i = 0;
 
-        loop_counter:
+        counter_point:
             if ((text[i] >= 65) && (text[i] <= 90) || (text[i] >= 97) && (text[i] <= 122)
                 || text[i] == 45 || text[i] == 234 || text[i] == 225 || text[i] == 224)
             {
                 if ((text[i] >= 65) && (text[i] <= 90))
-                    currentWord += (char)(text[i] + 32);
+                    currWord += (char)(text[i] + 32);
                 else
-                    currentWord += text[i];
+                    currWord += text[i];
             }
             else
             {
@@ -38,38 +36,38 @@ namespace vladislavister
                     amountOfWordsOnPage = 0;
                     amountOfRows = 0;
                 }
-                if (currentWord != "" && currentWord != null && currentWord != "-"
-                    && currentWord != "no" && currentWord != "from" && currentWord != "the"
-                    && currentWord != "by" && currentWord != "and" && currentWord != "i"
-                    && currentWord != "in" && currentWord != "or" && currentWord != "any"
-                    && currentWord != "for" && currentWord != "to" && currentWord != "\""
-                    && currentWord != "a" && currentWord != "on" && currentWord != "of"
-                    && currentWord != "at" && currentWord != "is" && currentWord != "\n"
-                    && currentWord != "\r" && currentWord != "\r\n" && currentWord != "\n\r")
+                if (currWord != "" && currWord != null && currWord != "-"
+                    && currWord != "no" && currWord != "from" && currWord != "the"
+                    && currWord != "by" && currWord != "and" && currWord != "i"
+                    && currWord != "in" && currWord != "or" && currWord != "any"
+                    && currWord != "for" && currWord != "to" && currWord != "\""
+                    && currWord != "a" && currWord != "on" && currWord != "of"
+                    && currWord != "at" && currWord != "is" && currWord != "\n"
+                    && currWord != "\r" && currWord != "\r\n" && currWord != "\n\r")
                 {
 
-                    wordsArr[amountOfWords] = currentWord;
+                    wordsArr[amountOfWords] = currWord;
                     amountOfWords++;
-                    pagesWordsArr[amountOfPages, amountOfWordsOnPage] = currentWord;
+                    pagesArr[amountOfPages, amountOfWordsOnPage] = currWord;
                     amountOfWordsOnPage++;
                 }
-                currentWord = "";
+                currWord = "";
             }
             i++;
             if (i < lengthOfText)
-                goto loop_counter;
+                goto counter_point;
             else
             {
-                if (currentWord != "" && currentWord != null && currentWord != "-"
-                    && currentWord != "no" && currentWord != "from" && currentWord != "the"
-                    && currentWord != "by" && currentWord != "and" && currentWord != "i"
-                    && currentWord != "in" && currentWord != "or" && currentWord != "any"
-                    && currentWord != "for" && currentWord != "to" && currentWord != "\""
-                    && currentWord != "a" && currentWord != "on" && currentWord != "of"
-                    && currentWord != "at" && currentWord != "is" && currentWord != "\n"
-                    && currentWord != "\r" && currentWord != "\r\n" && currentWord != "\n\r")
+                if (currWord != "" && currWord != null && currWord != "-"
+                    && currWord != "no" && currWord != "from" && currWord != "the"
+                    && currWord != "by" && currWord != "and" && currWord != "i"
+                    && currWord != "in" && currWord != "or" && currWord != "any"
+                    && currWord != "for" && currWord != "to" && currWord != "\""
+                    && currWord != "a" && currWord != "on" && currWord != "of"
+                    && currWord != "at" && currWord != "is" && currWord != "\n"
+                    && currWord != "\r" && currWord != "\r\n" && currWord != "\n\r")
                 {
-                    wordsArr[amountOfWords] = currentWord;
+                    wordsArr[amountOfWords] = currWord;
                     amountOfWords++;
                 }
             }
@@ -81,22 +79,22 @@ namespace vladislavister
             int j = 0;
             int dubs = 0;
 
-        loop_outerCounter:
+        outCount_point:
             insertPos = 0;
             int current_length = wordsOnlyOnceArr.Length;
             j = 0;
-        loop_inerCounter:
+        innerCount_point:
             if (j < current_length && wordsOnlyOnceArr[j] != null)
             {
                 if (wordsOnlyOnceArr[j] == wordsArr[i])
                 {
                     insertPos = j;
-                    goto loop_endCounter;
+                    goto endCount_point;
                 }
                 j++;
-                goto loop_inerCounter;
+                goto innerCount_point;
             }
-        loop_endCounter:
+        endCount_point:
             if (insertPos == 0)
             {
                 wordsOnlyOnceArr[i - dubs] = wordsArr[i];
@@ -109,13 +107,13 @@ namespace vladislavister
             }
             i++;
             if (i < amount_of_words && wordsArr[i] != null)
-                goto loop_outerCounter;
+                goto outCount_point;
 
             int length = wordsOnceCountArr.Length;
             int k = 0;
             string[] wordsOnlyOnceArrLessThan100 = new string[100000];
             int LastInsert = 0;
-        loop_lessThan100:
+        extensionHundred_point:
             if (k < length && wordsOnlyOnceArr[k] != null)
             {
                 if (wordsOnceCountArr[k] <= 100)
@@ -124,7 +122,7 @@ namespace vladislavister
                     LastInsert++;
                 }
                 k++;
-                goto loop_lessThan100;
+                goto extensionHundred_point;
             }
 
             int write = 0;
@@ -133,11 +131,11 @@ namespace vladislavister
             int counter = 0;
             int wordLenthCurren = 0;
             int wordLenthNext = 0;
-        loop_outerBubbleSort:
+        outerBubbleSort_point:
             if (write < wordsOnlyOnceArrLessThan100.Length && wordsOnlyOnceArrLessThan100[write] != null)
             {
                 sort = 0;
-            loop_innerBubbleSort:
+            innerBubbleSort_point:
                 if (sort < wordsOnlyOnceArrLessThan100.Length - write - 1 && wordsOnlyOnceArrLessThan100[sort + 1] != null)
                 {
                     wordLenthCurren = wordsOnlyOnceArrLessThan100[sort].Length;
@@ -152,14 +150,14 @@ namespace vladislavister
                     if (wordsOnlyOnceArrLessThan100[sort][counter] > wordsOnlyOnceArrLessThan100[sort + 1][counter])
                     {
                         toSwapWords = true;
-                        goto loop_checkAlphabetEnd;
+                        goto checkAlphabetEnd_point;
                     }
                     if (wordsOnlyOnceArrLessThan100[sort][counter] < wordsOnlyOnceArrLessThan100[sort + 1][counter])
-                        goto loop_checkAlphabetEnd;
+                        goto checkAlphabetEnd_point;
                     counter++;
                     if (counter < compareLenth)
                         goto check_alphabet;
-                    loop_checkAlphabetEnd:
+                    checkAlphabetEnd_point:
                     if (toSwapWords)
                     {
                         string temp = wordsOnlyOnceArrLessThan100[sort];
@@ -167,14 +165,14 @@ namespace vladislavister
                         wordsOnlyOnceArrLessThan100[sort + 1] = temp;
                     }
                     sort++;
-                    goto loop_innerBubbleSort;
+                    goto innerBubbleSort_point;
                 }
                 write++;
-                goto loop_outerBubbleSort;
+                goto outerBubbleSort_point;
             }
             k = 0;
             int less_than_100_length = wordsOnlyOnceArrLessThan100.Length;
-        loop_print:
+        print_point:
             if (k < less_than_100_length && wordsOnlyOnceArrLessThan100[k] != null)
             {
                 Console.Write("{0} - ", wordsOnlyOnceArrLessThan100[k]);
@@ -183,29 +181,29 @@ namespace vladislavister
                 int[] wordPages = new int[100];
                 int pageInsert = 0;
 
-            loop_checkPage:
-                if (firstDim < 10000 && pagesWordsArr[firstDim, 0] != null)
+            checkPage_point:
+                if (firstDim < 10000 && pagesArr[firstDim, 0] != null)
                 {
                     secondDim = 0;
-                loop_checkPageWord:
-                    if (secondDim < 10000 && pagesWordsArr[firstDim, secondDim] != null)
+                checkPageWord_point:
+                    if (secondDim < 10000 && pagesArr[firstDim, secondDim] != null)
                     {
-                        if (pagesWordsArr[firstDim, secondDim] == wordsOnlyOnceArrLessThan100[k])
+                        if (pagesArr[firstDim, secondDim] == wordsOnlyOnceArrLessThan100[k])
                         {
                             wordPages[pageInsert] = firstDim + 1;
                             pageInsert++;
                             firstDim++;
-                            goto loop_checkPage;
+                            goto checkPage_point;
                         }
                         secondDim++;
-                        goto loop_checkPageWord;
+                        goto checkPageWord_point;
                     }
 
                     firstDim++;
-                    goto loop_checkPage;
+                    goto checkPage_point;
                 }
                 int tiredCounte = 0;
-            loop_pagination:
+            pagination_point:
                 if (tiredCounte < 100 && wordPages[tiredCounte] != 0)
                 {
                     if (tiredCounte != 99 && wordPages[tiredCounte + 1] != 0)
@@ -213,11 +211,11 @@ namespace vladislavister
                     else
                         Console.Write("{0}", wordPages[tiredCounte]);
                     tiredCounte++;
-                    goto loop_pagination;
+                    goto pagination_point;
                 }
                 Console.WriteLine();
                 k++;
-                goto loop_print;
+                goto print_point;
             }
         }
     }
